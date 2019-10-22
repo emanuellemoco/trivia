@@ -1,0 +1,63 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Bungee", cursive;
+}
+
+p {
+  font-family: "Bungee", cursive;
+  font-size: 10px;
+}
+
+/* span.bungee {
+  font-family: "Bungee", cursive;
+} */
+
+.app {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* .header {
+  font-size: 60px;
+  font-family: "Bungee", cursive;
+}
+.subheader {
+  font-size: 20px;
+  font-family: "Bungee", cursive;
+} */
+
+/* a.link {
+  text-decoration: none;
+  color: #ff1769;
+}
+
+a.link:hover {
+  text-decoration: none;
+  border-bottom: 2px solid #000;
+} */
+
+table {
+  border-collapse: collapse;
+  border-color: black;
+  color: darkgray;
+}
+
+button { 
+  background-color: transparent;
+  font-family: Arial;
+  text-decoration: none;
+  color: green;
+  padding: 20px 50px;
+  width: 40%;
+  text-align: center;
+  display: inline-block;
+  font-size: 12px;
+  cursor:pointer;
+  border-radius: 8px;
+  
+}
