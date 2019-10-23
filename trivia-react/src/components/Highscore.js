@@ -25,16 +25,6 @@ function Highscore (props) {
 
             </tr>
         </table>
-
-        {/* {props.usuarios.map((usuario) => (
-           <p>{usuario}</p>
-        ))}
-         {props.scores.map((score) => (
-           <p>{score}</p>
-        ))} */}
-         
-           
-
         </div>
     )
 }

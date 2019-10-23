@@ -1,20 +1,10 @@
-//colocar high score
-//mostrar numero de acertos
-//mostrar a resposta certa quando a pessoa errar
-//mostrar a categoria
-
-//deixar a pessoa escolher a categoria
-
 import React, {Component} from "react";
-// import Footer from "./components/Footer";
-//import Header from "./components/Header";
+
 import Question from  "./components/Question";
 import Highscore from  "./components/Highscore";
 import axios from "axios"
-
 import "./App.css";
-//import { qualifiedTypeIdentifier } from "@babel/types";
-//import { list } from "postcss"; 
+
 
 class App extends Component {
     constructor() {
@@ -42,13 +32,10 @@ class App extends Component {
         this.setState({loading : true})
         fetch("https://opentdb.com/api.php?amount=50")
             .then(response => response.json())
-            
-            //.then(data => console.log(data))
             .then(data => { 
                 this.state.quiz.push(data)
                 data.results[0].incorrect_answers.map(
                     incorrect=>{lista.push(incorrect)
-                        //console.log(data)
                 })
                 lista.push(data.results[0].correct_answer)   
                 this.makeSuffle(lista)                
@@ -57,22 +44,13 @@ class App extends Component {
                     loading: false,
                     listAnwser : lista,
                     quiz : data
-                    
                 })
-                //results[i] para cada resultado
                 this.setState({question:this.state.quiz.results[0].question})
                 this.setState({category:this.state.quiz.results[0].category})
-                console.log(this.state.quiz.results[0].correct_answer)
-                this.setState({correct_answer:this.state.quiz.results[0].correct_answer})
-                // this.setState({category:this.state.quiz[0].results[0].category})
-                // this.setState({difficulty:this.state.quiz[0].results[0].difficulty})
-                // this.setState({type:this.state.quiz[0].results[0].type})   
+                this.setState({correct_answer:this.state.quiz.results[0].correct_answer})  
             })
-            this.createScore()
-           
+            this.createScore()      
     }
-
-
     createJson = async ()=> {
         let lista = []
         this.setState({loading : true})
@@ -94,7 +72,6 @@ class App extends Component {
             this.setState({question:this.state.quiz.results[0].question})
             this.setState({correct_answer:this.state.quiz.results[0].correct_answer})
             this.setState({category:this.state.quiz.results[0].category})
-            console.log(this.state.quiz.results[0].correct_answer)
             return true
     } 
     createJsonBoolean = async ()=> {
@@ -105,8 +82,6 @@ class App extends Component {
             .then(data => { 
                 data.results[0].incorrect_answers.map(
                     incorrect=>{lista.push(incorrect)
-                    console.log("entrou boolean")
-                    console.log(data)
                 })
                 lista.push(data.results[0].correct_answer)   
                 this.makeSuffle(lista)                
@@ -116,14 +91,9 @@ class App extends Component {
                     quiz : data,
                 })
             })
-            console.log(this.state.quiz)
-            console.log(this.state.quiz.results[0].question)
             this.setState({question:this.state.quiz.results[0].question})
             this.setState({correct_answer:this.state.quiz.results[0].correct_answer})
-            this.setState({category:this.state.quiz.results[0].category})
-            
-            console.log(this.state.quiz.results[0].correct_answer)
-             
+            this.setState({category:this.state.quiz.results[0].category})             
             return true
     } 
     
@@ -144,13 +114,9 @@ class App extends Component {
                     quiz : data,
                 })
             })
-            console.log(this.state.quiz)
-            console.log(this.state.quiz.results[0].question)
             this.setState({question:this.state.quiz.results[0].question})
             this.setState({correct_answer:this.state.quiz.results[0].correct_answer})
-            this.setState({category:this.state.quiz.results[0].category})
-            console.log(this.state.quiz.results[0].correct_answer)
-            
+            this.setState({category:this.state.quiz.results[0].category})            
             return true
     }
 
@@ -162,44 +128,29 @@ class App extends Component {
     }
 
     creatJsonCategory = async(event)=> {
-        console.log("entrou creatJsonCategory")
         var type = event.target.value
-        console.log(event.target.value) //pegando multiple quando eh pra ser truefalse
 
-        //zerar os dados
-        //zerar o id 
+        //zerar os dados e o id
         this.setState({id:0})
-        let b = await this.createScore()
-        console.log(this.state.quiz)
-        console.log(this.state.quiz.results[0].question)
-        //this.setState({question:this.state.quiz.results[0].question})
-        //this.setState({correct_answer:this.state.quiz.results[0].correct_answer})
-
-        
+        let b = await this.createScore()    
         
         if (type === "anyType"){
-           // this.createJson()
             let a = await this.createJson() 
         }
         if (type === 'multiple'){
             let a = await this.createJsonMultiple() 
-            //this.createJsonMultiple()
         }
         if (type === 'boolean'){
             let a = await this.createJsonBoolean() 
-            //this.createJsonBoolean()
         }    
     }
 
     createSetState = () => {
-        //console.log("entrou no create state")
-        //console.log(this.state.id +1) //pois o primeiro foi no componentdidmout
         let lista = []
         this.state.quiz.results[this.state.id+1].incorrect_answers.map( 
             incorrect=>{lista.push(incorrect)})
             
         let correct = this.state.quiz.results[this.state.id+1].correct_answer
-        console.log(correct)
         lista.push(correct)
 
         this.makeSuffle(lista)
@@ -211,48 +162,34 @@ class App extends Component {
         })
     }
     checktop10 = (score) => {
-        console.log("entrou top 10")
-        //
         let scores = this.state.scores_score //lista com todos os scores
 
         let lastScore = scores[9]
-        //OBS ARRUMAR AQUI PARA > **
-        //NAO ESQUECER DE ARRUMAR AQUI
-        if (score > lastScore){ //////////AAAAAAAAARRRUMAR AQUI
+        if (score > lastScore){ 
             var name = prompt("GREAT! You are in the top 10, type your name:");
             //atualizar o nome da pessoa e o score no banco de dados
             let usuarios = this.state.usuarios_score
             let lastUser = usuarios[9]
 
-            //chama funcao updateScore para adicionar o novo score
+            //chama funcao insertScore para adicionar o novo score
             this.insertScore(name, score)
         }
-
     }
 
     checkAnswer = async (answer)=>{
         if (answer === this.state.correct_answer){
             let id_novo = this.state.id + 1
             this.setState({id:id_novo})
-            console.log("ACERTO")
-            //clicked chamao checkAnswer e se true chama createSetState
             return true
         }
         else {
-            console.log("ERROU")
             alert("Wrong answer. Game over.                                                                   The correct answes was: " + this.state.correct_answer)
-            //alert("The correct answes was: " + this.state.correct_answer)
-            console.log("chamando o checktop10")
             this.checktop10(this.state.id) //mandando a qtd de acertos e confere se ta no top10
             
-
             //zerar o id 
             this.setState({id:0})
             let a = await this.createJson() 
             let b = await this.createScore()
-            console.log("TESTE")
-            console.log(this.state.quiz)
-            console.log(this.state.quiz.results[0].question)
             this.setState({question:this.state.quiz.results[0].question})
             this.setState({correct_answer:this.state.quiz.results[0].correct_answer}) 
             return false 
@@ -276,9 +213,7 @@ class App extends Component {
     createScore = async ()=> {
         let listaUsuarios = []
         let listaScores = []
-    
-        //console.log("entrou no createScore")
-        //this.setState({loading : true})
+
         await fetch("http://localhost:4000/highscore")
             .then(response => response.json())  
             .then(data => { 
@@ -297,10 +232,6 @@ class App extends Component {
     }  
     
     insertScore = async (name, score)=> {
-        console.log("name: " + name)
-        console.log("score: " + score)
-        //this.setState({loading : true})
-        
         await axios.get("http://localhost:4000/insert",{
             params:{
                 name,score
@@ -308,16 +239,11 @@ class App extends Component {
         })
             return true
     } 
-
-    
     
     render() {
-        // const frist = "primeiro"
-        // const second = "segundo"
         const date = new Date()
         const hours = date.getHours()
         let timeOfDay
-        const {count} = this.state
 
         if (hours<12){
             timeOfDay = "morning"
@@ -327,19 +253,22 @@ class App extends Component {
             timeOfDay = "night"
         }
 
-        const text = this.state.loading ? "loading..." : this.state.quiz.question
-        //console.log(this.state.question)
-        return( 
-            
-            <div>
-                <nav>
+        // current day
+        // adjust 0 before single digit date
+        let day = ("0" + date.getDate()).slice(-2);
+        // current month
+        let month = ("0" + (date.getMonth() + 1)).slice(-2);
+        // current year
+        let year = date.getFullYear();
 
-                {/* <h1>teste {frist + " " + second }</h1>
-                <h2>oalaa {`${frist}`}</h2> */}
-                
-                <h3>Good {timeOfDay}!! Let's play trivia?</h3>
-                {/* <Header/>
-                <Footer/>*/}
+        let fullDate = year + "-" + month  + "-" + day
+
+        const text = this.state.loading ? "loading..." : this.state.quiz.question
+        
+        return( 
+            <div>
+                <nav>                
+                <h3>Good {timeOfDay}!! Let's play trivia? &emsp;&emsp;&emsp;&emsp;&emsp; {fullDate} </h3>
                 </nav>
                 <main>
                 
@@ -350,14 +279,10 @@ class App extends Component {
                     <option value="multiple">Multiple Choiche</option> 
                     <option value="boolean">True / False</option>
                 </select>
-                </form>
-                {/* <h6 id="textCategory"></h6> */}
-                
+                </form>               
                 
                 <Question question={this.state.question} id={this.state.id} category={this.state.category}/>
                 <p>{text}</p>
-
-
 
                 <button onClick={this.clicked} type="submit" name={this.state.listAnwser[0]} style={{display: !this.state.listAnwser[0] && "none"}}>{this.state.listAnwser[0]}</button>
                 <button onClick={this.clicked} type="submit" name={this.state.listAnwser[1]}  style={{display: !this.state.listAnwser[1] && "none"}}>{this.state.listAnwser[1]}</button>
@@ -371,11 +296,6 @@ class App extends Component {
                 <hr/>  
                 
                 <Highscore usuarios={this.state.usuarios_score} scores={this.state.scores_score}/>
-
-
-                {/* <button disabled type="button"> {this.state.id} </button>
-             */}
-                {/* <h4>{JSON.stringify(this.state.quiz[0])}</h4> */}
                 </main>
             </div> 
         )

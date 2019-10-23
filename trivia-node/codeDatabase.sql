@@ -22,5 +22,5 @@ INSERT INTO Score (usuario, score) VALUES ('rafael', 1);
 INSERT INTO Score (usuario, score) VALUES ('gabi', 1);
 INSERT INTO Score (usuario, score) VALUES ('pedro', 1);
 
-UPDATE Score SET usuario=? WHERE id_tarefa=?
+
 
